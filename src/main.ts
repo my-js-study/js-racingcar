@@ -1,1 +1,1 @@
-export const app = document.querySelector<HTMLDivElement>("#app")!;
+export const app = document.querySelector<HTMLDivElement>('#app')!;
