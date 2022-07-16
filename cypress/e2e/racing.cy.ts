@@ -61,4 +61,50 @@ describe('racing car', () => {
         });
     });
   });
+
+  context('시도할 횟수 입력', () => {
+    beforeEach(() => {
+      cy.get('[data-cy="car-name-input"]').type('foo, bar, baz');
+      cy.get('[data-cy="car-name-button"]').click();
+    });
+
+    it('시도할 횟수 입력창의 값이 1보다 작으면 alert창과 함께 에러메세지를 호출한다.', () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+
+      cy.get('[data-cy="movement-count-input"]').type('0');
+      cy.get('[data-cy="movement-count-button"]')
+        .click()
+        .then(() => {
+          expect(alertStub.getCall(0)).to.be.calledWith(
+            ERROR_MESSAGE.SMALL_NUMBER,
+          );
+        });
+    });
+
+    it('시도할 횟수 입력창에 값을 입력하지 않으면 alert창과 함께 에러메세지를 호출한다.', () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+
+      cy.get('[data-cy="movement-count-button"]')
+        .click()
+        .then(() => {
+          expect(alertStub.getCall(0)).to.be.calledWith(
+            ERROR_MESSAGE.SMALL_NUMBER,
+          );
+        });
+    });
+
+    it('시도할 횟수 입력창에 값을 정상적으로 입력하면 레이싱 경기를 볼 수 있다.', () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+
+      cy.get('[data-cy="movement-count-input"]').type('2');
+      cy.get('[data-cy="movement-count-button"]')
+        .click()
+        .then(() => {
+          cy.get('#current-state').should('to.be.visible');
+        });
+    });
+  });
 });
