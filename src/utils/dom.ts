@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from '../constants';
+import { CUSTOM_EVENT_NAME, ERROR_MESSAGE } from '../constants';
 
 export function $<T = HTMLElement>(selector: string, scope?: HTMLElement): T {
   if (!selector) throw new Error(ERROR_MESSAGE.NO_SELECTOR);
@@ -27,7 +27,11 @@ export function $$<T = HTMLElement>(
   return Array.from(result) as unknown[] as T[];
 }
 
-export function emit<T>(target: Element, eventName: string, detail: T) {
-  const event = new CustomEvent(eventName, { detail });
+export function emit<T = unknown>(
+  target: Element,
+  eventName: keyof typeof CUSTOM_EVENT_NAME,
+  detail: T,
+) {
+  const event = new CustomEvent<T>(eventName, { detail });
   target.dispatchEvent(event);
 }
