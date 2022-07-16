@@ -1,5 +1,5 @@
-import { CUSTOM_EVENT_NAME } from '../constants/index.js';
-import { emit } from '../utils/dom.js';
+import { CUSTOM_EVENT_NAME } from '../constants';
+import { emit } from '../utils/dom';
 
 interface EventListener {
   (event: Event): void;
