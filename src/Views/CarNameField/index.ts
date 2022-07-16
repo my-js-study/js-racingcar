@@ -29,7 +29,7 @@ export default class CarNameFieldView extends View {
     );
 
     if (!isAllValid) {
-      console.log(ERROR_MESSAGE.INVALID_NAME_LENGTH);
+      alert(ERROR_MESSAGE.INVALID_NAME_LENGTH);
       return;
     }
 
