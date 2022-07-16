@@ -1,4 +1,5 @@
 import { ERROR_MESSAGE } from '../../constants';
+import type { SaveMovementCountProps } from '../../types';
 import { $ } from '../../utils/dom';
 import View from '../View';
 
@@ -27,7 +28,7 @@ export default class MovementCountFieldView extends View {
       return;
     }
 
-    this.emitCustomEvent('saveMovementCount', {
+    this.emitCustomEvent<SaveMovementCountProps>('saveMovementCount', {
       movementCount: value,
     });
   }

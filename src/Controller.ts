@@ -1,11 +1,8 @@
+import type { SaveCarNamesProps, SaveMovementCountProps } from './types';
 import CarNameFieldView from './views/CarNameField';
 import CurrentStateView from './views/CurrentState';
 import MovementCountFieldView from './views/MovementCountField';
 import RacingResultView from './views/RacingResult';
-
-interface EventListener {
-  (event: Event): void;
-}
 
 export default class Controller {
   carNames: string[];
@@ -29,12 +26,12 @@ export default class Controller {
   subscribeViewEvents() {
     this.carNameFieldView.addCustomEventListener(
       'saveCarNames',
-      this.handleSaveCarNames.bind(this) as EventListener,
+      this.handleSaveCarNames.bind(this),
     );
 
     this.movementCountFieldView.addCustomEventListener(
       'saveMovementCount',
-      this.handleSaveMovementCount.bind(this) as EventListener,
+      this.handleSaveMovementCount.bind(this),
     );
   }
 
@@ -44,7 +41,7 @@ export default class Controller {
     this.racingResultView.hide();
   }
 
-  handleSaveCarNames(e: CustomEvent) {
+  handleSaveCarNames(e: CustomEvent<SaveCarNamesProps>) {
     this.carNames = e.detail.carNames;
     this.renderMovementCountField();
   }
@@ -53,7 +50,7 @@ export default class Controller {
     this.movementCountFieldView.show();
   }
 
-  handleSaveMovementCount(e: CustomEvent) {
+  handleSaveMovementCount(e: CustomEvent<SaveMovementCountProps>) {
     this.movementCount = e.detail.movementCount;
     this.renderCurrentState();
     this.currentStateView.renderCarNameTags(this.carNames, this.movementCount);

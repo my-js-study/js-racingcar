@@ -1,6 +1,10 @@
 import { CUSTOM_EVENT_NAME } from '../constants/index.js';
 import { emit } from '../utils/dom.js';
 
+interface EventListener {
+  (event: Event): void;
+}
+
 export default class View {
   element: HTMLElement;
   originalDisplay: CSSStyleDeclaration['display'];
@@ -25,7 +29,7 @@ export default class View {
     eventName: keyof typeof CUSTOM_EVENT_NAME,
     data: T,
   ) {
-    emit(this.element, eventName, data);
+    emit<T>(this.element, eventName, data);
     return this;
   }
 
@@ -33,10 +37,10 @@ export default class View {
     this.element.addEventListener(eventName, handler);
   }
 
-  addCustomEventListener(
+  addCustomEventListener<T = unknown>(
     eventName: keyof typeof CUSTOM_EVENT_NAME,
-    handler: (e: Event) => void,
+    handler: (evt: CustomEvent<T>) => void,
   ) {
-    this.element.addEventListener(eventName, handler);
+    this.element.addEventListener(eventName, handler as EventListener);
   }
 }

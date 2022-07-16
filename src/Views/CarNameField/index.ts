@@ -1,4 +1,5 @@
 import { ERROR_MESSAGE } from '../../constants';
+import type { SaveCarNamesProps } from '../../types';
 import { $ } from '../../utils/dom';
 import View from '../View';
 
@@ -33,7 +34,7 @@ export default class CarNameFieldView extends View {
       return;
     }
 
-    this.emitCustomEvent<{ carNames: string[] }>('saveCarNames', {
+    this.emitCustomEvent<SaveCarNamesProps>('saveCarNames', {
       carNames,
     });
   }
