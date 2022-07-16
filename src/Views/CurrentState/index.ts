@@ -30,12 +30,12 @@ export default class CurrentStateView extends View {
   }
 
   async startCarRacing() {
-    const renderRacingStatus = () => this.renderRacingStatus();
+    const renderRacingStatuses = Array(this.movementCount).fill(() =>
+      this.renderRacingStatus(),
+    );
 
-    const racingStatuses = Array(this.movementCount).fill(renderRacingStatus);
-
-    for (const racingStatus of racingStatuses) {
-      await racingStatus();
+    for (const renderRacingStatus of renderRacingStatuses) {
+      await renderRacingStatus();
     }
   }
 
